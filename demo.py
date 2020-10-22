@@ -11,12 +11,12 @@ from tensorflow.keras.models import load_model
 app = flask.Flask(__name__)
 model = None
 
-def load_model():
+def load_the_model():
 	# load the pre-trained Keras model (here we are using a model
 	# pre-trained on ImageNet and provided by Keras, but you can
 	# substitute in your own networks just as easily)
 	global model
-    model = load_model('model2.h5')
+	model = load_model('model2.h5')
 	
 
 def prepare_image(image, target):
@@ -53,7 +53,7 @@ def predict():
 			# of predictions to return to the client
 			pred= model.predict(image)
 			pred_labels=pred.argmax(axis=-1)
-			data["predictions"] = pred_labels
+			data["predictions"] = int(pred_labels[0])
 			# indicate that the request was a success
 			data["success"] = True
 
@@ -65,5 +65,5 @@ def predict():
 if __name__ == "__main__":
 	print(("* Loading Keras model and Flask starting server..."
 		"please wait until server has fully started"))
-	load_model()
+	load_the_model()
 	app.run()
